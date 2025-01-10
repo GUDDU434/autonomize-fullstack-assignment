@@ -15,7 +15,7 @@ async function fetchGitHubUser(username) {
 }
 
 exports.GetUserByUsername = async (req, res) => {
-  const { username } = req.body;
+  const { username } = req.params;
 
   try {
     const existingUser = await User.findOne({ username });
@@ -26,25 +26,50 @@ exports.GetUserByUsername = async (req, res) => {
       });
     }
 
-    const gitHubData = await fetchGitHubUser(username);
+    const { user } = await fetchGitHubUser(username);
 
     const newUser = new User({
-      username: gitHubData.login,
-      name: gitHubData.name,
-      location: gitHubData.location,
-      blog: gitHubData.blog,
-      bio: gitHubData.bio,
-      public_repos: gitHubData.public_repos,
-      public_gists: gitHubData.public_gists,
-      followers: gitHubData.followers,
-      following: gitHubData.following,
-      created_at: gitHubData.created_at,
-      updated_at: gitHubData.updated_at,
+      login: user.login,
+      avatar_url: user.avatar_url,
+      username: user.login,
+      name: user.name,
+      location: user.location,
+      blog: user.blog,
+      bio: user.bio,
+      public_repos: user.public_repos,
+      public_gists: user.public_gists,
+      followers: user.followers,
+      following: user.following,
+      created_at: user.created_at,
+      updated_at: user.updated_at,
     });
 
     await newUser.save();
     res.status(201).json({ message: "User saved successfully", user: newUser });
   } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: error.message });
+  }
+};
+
+exports.GetReposAndFollowers = async (req, res) => {
+  const { username } = req.params;
+
+  try {
+    const repoRes = await axios.get(
+      `https://api.github.com/users/${username}/repos`
+    );
+    const followersRes = await axios.get(
+      `https://api.github.com/users/${username}/followers`
+    );
+
+    res.status(200).json({
+      message: "Repos and followers fetched successfully",
+      repoRes: repoRes.data,
+      followersRes: followersRes.data,
+    });
+  } catch (error) {
+    console.error(error);
     res.status(500).json({ error: error.message });
   }
 };

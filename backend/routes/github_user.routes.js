@@ -6,9 +6,11 @@ const {
   UpdateUserFields,
   SoftDeleteUser,
   SearchUser,
+  GetReposAndFollowers,
 } = require("../controllers/github_user.controller");
 
-routes.post("/", GetUserByUsername);
+routes.get("/:username", GetUserByUsername);
+routes.get("/:username/repos", GetReposAndFollowers);
 routes.post("/:username/friends", FindMutualFriends);
 routes.get("/search", SearchUser);
 routes.delete("/:username", SoftDeleteUser);
