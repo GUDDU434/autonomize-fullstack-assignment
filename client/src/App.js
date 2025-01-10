@@ -14,22 +14,18 @@ const App = () => {
 
   const handleSearch = async (user_name) => {
     try {
-      const userRes = await fetch(`https://api.github.com/users/${user_name}`);
-      const repoRes = await fetch(
-        `https://api.github.com/users/${user_name}/repos`
-      );
-      const followersRes = await fetch(
-        `https://api.github.com/users/${user_name}/followers`
+      const userRes = await fetch(`https://autonomize-server.vercel.app/users/${user_name}`);
+      const repoResAndFollowers = await fetch(
+        `https://autonomize-server.vercel.app/users/${user_name}/repos`
       );
 
-      if (userRes.ok && repoRes.ok && followersRes.ok) {
+      if (userRes.ok && repoResAndFollowers.ok) {
         const userData = await userRes.json();
-        const repositories = await repoRes.json();
-        const followers = await followersRes.json();
+        const { repoRes, followersRes } = await repoResAndFollowers.json();
 
-        setUserData(userData);
-        setRepositories(repositories);
-        setFollowers(followers);
+        setUserData(userData?.user);
+        setRepositories(repoRes);
+        setFollowers(followersRes);
         setCurrentView("repoList");
       } else {
         alert("User not found!");
