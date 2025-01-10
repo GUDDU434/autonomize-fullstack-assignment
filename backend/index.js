@@ -7,7 +7,7 @@ const app = express();
 app.use(express.json());
 
 // Routes
-app.use("user", require("./routes/github_user.routes"));
+app.use("/users", require("./routes/github_user.routes"));
 
 // Connect to MongoDB
 require("./db/db.config");

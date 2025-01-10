@@ -1,5 +1,4 @@
-// import User from "../modal/github_user.modal";
-
+const User = require("../modal/github_user.modal");
 const axios = require("axios");
 require("dotenv").config();
 
