@@ -14,18 +14,22 @@ const App = () => {
 
   const handleSearch = async (user_name) => {
     try {
-      const userRes = await fetch(`https://autonomize-fullstack-assignment-9nbx.vercel.app/users/${user_name}`);
-      const repoResAndFollowers = await fetch(
-        `https://autonomize-fullstack-assignment-9nbx.vercel.app/users/${user_name}/repos`
+      const userRes = await fetch(`https://api.github.com/users/${user_name}`);
+      const repoRes = await fetch(
+        `https://api.github.com/users/${user_name}/repos`
+      );
+      const followersRes = await fetch(
+        `https://api.github.com/users/${user_name}/followers`
       );
 
-      if (userRes.ok && repoResAndFollowers.ok) {
+      if (userRes.ok && repoRes.ok && followersRes.ok) {
         const userData = await userRes.json();
-        const { repoRes, followersRes } = await repoResAndFollowers.json();
+        const repositories = await repoRes.json();
+        const followers = await followersRes.json();
 
-        setUserData(userData?.user);
-        setRepositories(repoRes);
-        setFollowers(followersRes);
+        setUserData(userData);
+        setRepositories(repositories);
+        setFollowers(followers);
         setCurrentView("repoList");
       } else {
         alert("User not found!");

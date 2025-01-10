@@ -26,7 +26,7 @@ exports.GetUserByUsername = async (req, res) => {
       });
     }
 
-    const { user } = await fetchGitHubUser(username);
+    const user = await fetchGitHubUser(username);
 
     const newUser = new User({
       login: user.login,
