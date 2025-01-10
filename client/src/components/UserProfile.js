@@ -1,19 +1,18 @@
 import React, { useState } from "react";
 import "../App.css";
 
-
 const userData = {
-  login: "mdjawedh022",
-  name: "Md Jawed Hussain",
-  avatar_url: "https://avatars.githubusercontent.com/u/107981893?v=4",
-  bio: "Aspiring full-stack web development professional.",
+  login: "GUDDU434",
+  name: "UDDU ALI",
+  avatar_url: "https://avatars.githubusercontent.com/u/99042645?v=4",
+  bio: "I am a FULL STACK WEB DEVELOPER specializing in MERN STACK from Masai school Bengaluru, Karnataka",
   company: "Masai School",
-  blog: "https://mdjawedh022.github.io/",
+  blog: "https://GUDDU434.github.io/",
   location: "Mumbai, Maharashtra",
-  public_repos: 58,
-  followers: 52,
-  following: 17,
-  html_url: "https://github.com/mdjawedh022",
+  public_repos: 16,
+  followers: 15,
+  following: 13,
+  html_url: "https://github.com/GUDDU434",
 };
 
 const repos = [
